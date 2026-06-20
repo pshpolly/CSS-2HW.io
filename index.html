@@ -1,1 +1,481 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Популяція Горил - Інформаційний Портал</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
 
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Header */
+        header {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        header h1 {
+            font-size: 3em;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.3);
+        }
+
+        header p {
+            font-size: 1.2em;
+            opacity: 0.9;
+        }
+
+        /* Slider */
+        .slider-container {
+            background: linear-gradient(135deg, #ecf0f1 0%, #bdc3c7 100%);
+            padding: 60px 0;
+            margin: 40px 0;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+        }
+
+        .slider {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 20px;
+        }
+
+        .slider-button {
+            background: #2c3e50;
+            color: white;
+            border: none;
+            padding: 15px 20px;
+            font-size: 1.5em;
+            cursor: pointer;
+            border-radius: 5px;
+            transition: background 0.3s;
+            min-width: 60px;
+        }
+
+        .slider-button:hover {
+            background: #34495e;
+        }
+
+        .slide-content {
+            flex: 1;
+            padding: 40px;
+            background: white;
+            border-radius: 10px;
+            text-align: center;
+            min-height: 400px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .slide-content h2 {
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+
+        .slide-content .emoji {
+            font-size: 5em;
+            margin: 20px 0;
+        }
+
+        .slide-content p {
+            font-size: 1.1em;
+            margin-bottom: 15px;
+            color: #555;
+        }
+
+        .population-badge {
+            display: inline-block;
+            background: linear-gradient(135deg, #e74c3c, #c0392b);
+            color: white;
+            padding: 10px 20px;
+            border-radius: 25px;
+            font-weight: bold;
+            margin: 10px 5px;
+            font-size: 1.1em;
+        }
+
+        /* Map Section */
+        .map-section {
+            padding: 60px 0;
+            background: #f8f9fa;
+        }
+
+        .map-section h2 {
+            text-align: center;
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 50px;
+        }
+
+        .maps-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            margin-bottom: 40px;
+        }
+
+        .map-card {
+            background: white;
+            border-radius: 10px;
+            overflow: hidden;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.1);
+            transition: transform 0.3s, box-shadow 0.3s;
+            padding: 20px;
+        }
+
+        .map-card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.15);
+        }
+
+        .map-card h3 {
+            color: #2c3e50;
+            margin-bottom: 15px;
+            font-size: 1.5em;
+        }
+
+        .map-card .map-visualization {
+            background: linear-gradient(135deg, #27ae60 0%, #16a085 100%);
+            border-radius: 8px;
+            padding: 30px;
+            text-align: center;
+            color: white;
+            margin-bottom: 15px;
+            min-height: 150px;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .map-card .map-emoji {
+            font-size: 4em;
+            margin-bottom: 10px;
+        }
+
+        .map-card .population-data {
+            font-size: 1.3em;
+            font-weight: bold;
+        }
+
+        .map-card p {
+            color: #666;
+            font-size: 0.95em;
+            line-height: 1.8;
+        }
+
+        /* Stats */
+        .stats-section {
+            background: linear-gradient(135deg, #2c3e50 0%, #34495e 100%);
+            color: white;
+            padding: 60px 0;
+            margin: 40px 0;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 30px;
+        }
+
+        .stat-card {
+            text-align: center;
+            padding: 30px;
+            background: rgba(255,255,255,0.1);
+            border-radius: 10px;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.2);
+        }
+
+        .stat-card h3 {
+            font-size: 2.5em;
+            color: #3498db;
+            margin-bottom: 10px;
+        }
+
+        .stat-card p {
+            font-size: 1.1em;
+        }
+
+        /* Footer */
+        footer {
+            background: #1a252f;
+            color: white;
+            text-align: center;
+            padding: 30px 0;
+            margin-top: 60px;
+        }
+
+        footer p {
+            margin-bottom: 10px;
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            header h1 {
+                font-size: 2em;
+            }
+
+            .slider {
+                flex-direction: column;
+                gap: 10px;
+            }
+
+            .slide-content {
+                min-height: 300px;
+                padding: 20px;
+            }
+
+            .slider-button {
+                width: 100%;
+            }
+
+            .maps-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .slide-number {
+            text-align: center;
+            color: #7f8c8d;
+            margin-top: 10px;
+            font-size: 0.9em;
+        }
+    </style>
+</head>
+<body>
+    <!-- Header -->
+    <header>
+        <div class="container">
+            <h1>🦍 Популяція Горил</h1>
+            <p>Дізнайся про найбільших примат на Землі</p>
+        </div>
+    </header>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Slider Section -->
+        <section class="slider-container">
+            <div class="slider">
+                <button class="slider-button" onclick="previousSlide()">❮</button>
+                
+                <div class="slide-content" id="slide-content">
+                    <div class="emoji">🦍</div>
+                    <h2 id="slide-title">Західні рівнинні горили</h2>
+                    <p id="slide-desc">Найбільша підвид горил, мешкають в Центральній Африці.</p>
+                    <div id="slide-population">
+                        <span class="population-badge">Популяція: ~100,000</span>
+                    </div>
+                    <p id="slide-info">Західні рівнинні горили - найпоширеніша та найчисленніша підвид. Вони живуть в лісах Габону, Конго та інших країн Центральної Африки.</p>
+                </div>
+
+                <button class="slider-button" onclick="nextSlide()">❯</button>
+            </div>
+            <div class="slide-number">
+                <span id="slide-num">1</span> / <span id="total-slides">4</span>
+            </div>
+        </section>
+
+        <!-- Map Section -->
+        <section class="map-section">
+            <h2>Географічні Ареали Популяції</h2>
+            
+            <div class="maps-grid">
+                <!-- Western Lowland Gorillas -->
+                <div class="map-card">
+                    <h3>🗺️ Західні Рівнинні Горили</h3>
+                    <div class="map-visualization">
+                        <div class="map-emoji">🌍</div>
+                        <div class="population-data">~100,000 особин</div>
+                    </div>
+                    <p><strong>Ареал:</strong> Габон, Камерун, Республіка Конго, ДРК, Екваторіальна Гвінея</p>
+                    <p><strong>Статус:</strong> Вразливі (VU)</p>
+                    <p><strong>Характеристика:</strong> Найбільша та найпоширеніша підвид. Живуть в тропічних лісах і болотах.</p>
+                </div>
+
+                <!-- Eastern Lowland Gorillas -->
+                <div class="map-card">
+                    <h3>🗺️ Східні Рівнинні Горили</h3>
+                    <div class="map-visualization">
+                        <div class="map-emoji">🌍</div>
+                        <div class="population-data">~3,000-5,000 особин</div>
+                    </div>
+                    <p><strong>Ареал:</strong> Східна Демократична Республіка Конго</p>
+                    <p><strong>Статус:</strong> Критично вразливі (CR)</p>
+                    <p><strong>Характеристика:</strong> Найменша підвид з темнішим забарвленням. Вкрай зменшується.</p>
+                </div>
+
+                <!-- Mountain Gorillas -->
+                <div class="map-card">
+                    <h3>🗺️ Гірські Горили</h3>
+                    <div class="map-visualization">
+                        <div class="map-emoji">⛰️</div>
+                        <div class="population-data">~1,000-1,100 особин</div>
+                    </div>
+                    <p><strong>Ареал:</strong> Угорські гори (Угорда, Руанда, ДРК)</p>
+                    <p><strong>Статус:</strong> Критично вразливі (CR)</p>
+                    <p><strong>Характеристика:</strong> Мешкають в гірських лісах на висоті 2,200-4,300м. Найменше чисельна популяція.</p>
+                </div>
+
+                <!-- Cross River Gorillas -->
+                <div class="map-card">
+                    <h3>🗺️ Горили Кросс-Рівер</h3>
+                    <div class="map-visualization">
+                        <div class="map-emoji">🌲</div>
+                        <div class="population-data">~250-300 особин</div>
+                    </div>
+                    <p><strong>Ареал:</strong> Границя Нігерії та Камеруну</p>
+                    <p><strong>Статус:</strong> Критично вразливі (CR)</p>
+                    <p><strong>Характеристика:</strong> Окремий вид. Невеликі популяції в фрагментарних лісах. Найрідкісніша підвид.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Statistics Section -->
+        <section class="stats-section">
+            <div class="container">
+                <h2 style="text-align: center; margin-bottom: 40px; font-size: 2.5em;">Статистика Популяцій</h2>
+                <div class="stats-grid">
+                    <div class="stat-card">
+                        <h3>104,000+</h3>
+                        <p>Загальна популяція всіх горил у світі</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>100%</h3>
+                        <p>Спільність ДНК з людиною</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>200 кг</h3>
+                        <p>Середня вага самця</p>
+                    </div>
+                    <div class="stat-card">
+                        <h3>45 років</h3>
+                        <p>Середня тривалість життя</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Info Section -->
+        <section style="padding: 60px 0; background: white;">
+            <h2 style="text-align: center; font-size: 2.5em; color: #2c3e50; margin-bottom: 40px;">Загрози для Популяцій</h2>
+            
+            <div class="maps-grid">
+                <div class="map-card">
+                    <h3>🔪 Браконьєрство</h3>
+                    <p>Незаконна охота та торгівля являються основною загрозою для горил. Браконьєри полюють на них за м'ясом та частинами тіла.</p>
+                </div>
+                <div class="map-card">
+                    <h3>🌳 Втрата Середовища</h3>
+                    <p>Знеліснення для сільського господарства та видобутку ресурсів знищує природні середовища горил.</p>
+                </div>
+                <div class="map-card">
+                    <h3>🦠 Хвороби</h3>
+                    <p>Вірус Ебола та інші захворювання вбили тисячи горил. Вони дуже чутливі до людських хвороб.</p>
+                </div>
+                <div class="map-card">
+                    <h3>⚔️ Конфлікти</h3>
+                    <p>Збройні конфлікти в Африці перешкоджають охороні горил та розорювання їхніх житлищ.</p>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer>
+        <div class="container">
+            <p>🦍 Інформаційний портал про популяцію горил</p>
+            <p>Допоможи збереженню горил - підтримай організації по охороні природи</p>
+            <p>&copy; 2024 Wildlife Conservation. Всі права захищені.</p>
+        </div>
+    </footer>
+
+    <script>
+        // Slider data
+        const slides = [
+            {
+                title: "Західні рівнинні горили",
+                desc: "Найбільша підвид горил, мешкають в Центральній Африці.",
+                population: "~100,000",
+                info: "Західні рівнинні горили - найпоширеніша та найчисленніша підвид. Вони живуть в лісах Габону, Конго та інших країн Центральної Африки. Це найбільші приматів на Землі.",
+                emoji: "🦍"
+            },
+            {
+                title: "Східні рівнинні горили",
+                desc: "Найменша та найрідкісніша підвид з темнішим забарвленням.",
+                population: "~3,000-5,000",
+                info: "Східні рівнинні горили мешкають в лісах Східної ДРК. Їхня популяція критично мала і швидко зменшується через браконьєрство та втрату середовища.",
+                emoji: "🦍"
+            },
+            {
+                title: "Гірські горили",
+                desc: "Живуть у гірських лісах на великих висотах.",
+                population: "~1,000-1,100",
+                info: "Гірські горили мешкають в горах Угорди, Руанди та ДРК на висотах від 2,200 до 4,300 метрів. Завдяки успішним програмам охорони, їхня популяція дещо зростала в останні роки.",
+                emoji: "⛰️"
+            },
+            {
+                title: "Горили Кросс-Рівер",
+                desc: "Найрідкісніша та найменша популяція горил у світі.",
+                population: "~250-300",
+                info: "Горили Кросс-Рівер мешкають на границі Нігерії та Камеруну в невеликих фрагментах лісів. Це критично вразливий вид з очень малою популяцією.",
+                emoji: "🌲"
+            }
+        ];
+
+        let currentSlide = 0;
+
+        function updateSlide() {
+            const slide = slides[currentSlide];
+            document.getElementById('slide-title').textContent = slide.title;
+            document.getElementById('slide-desc').textContent = slide.desc;
+            document.getElementById('slide-population').innerHTML = `<span class="population-badge">Популяція: ${slide.population}</span>`;
+            document.getElementById('slide-info').textContent = slide.info;
+            document.querySelector('.emoji').textContent = slide.emoji;
+            document.getElementById('slide-num').textContent = currentSlide + 1;
+        }
+
+        function nextSlide() {
+            currentSlide = (currentSlide + 1) % slides.length;
+            updateSlide();
+        }
+
+        function previousSlide() {
+            currentSlide = (currentSlide - 1 + slides.length) % slides.length;
+            updateSlide();
+        }
+
+        // Initialize
+        updateSlide();
+
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowRight') nextSlide();
+            if (e.key === 'ArrowLeft') previousSlide();
+        });
+    </script>
+</body>
+</html>
